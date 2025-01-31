@@ -1,0 +1,12 @@
+{
+    "standard":
+    {
+        "name": "standard_user",
+        "passwd": "secret_sauce"
+    },
+    "locked out":
+    {
+        "name": "locked_out_user",
+        "passwd": "secret_sauce"
+    }
+}

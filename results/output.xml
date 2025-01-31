@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.2 (Python 3.13.1 on win32)" generated="2025-01-31T16:58:18.883178" rpa="false" schemaversion="5">
+<suite id="s1" name="Robot Framework Automationexercise" source="C:\CYD\robot framework automationexercise">
+<suite id="s1-s1" name="Tests" source="C:\CYD\robot framework automationexercise\tests">
+<suite id="s1-s1-s1" name="Tests" source="C:\CYD\robot framework automationexercise\tests\tests">
+<suite id="s1-s1-s1-s1" name="Example_Test_Sauce_Demo" source="C:\CYD\robot framework automationexercise\tests\tests\test1.robot">
+<test id="s1-s1-s1-s1-t1" name="Scenario : Address Check" line="15">
+<kw name="Given I am on automationexercise website" owner="keywords">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-01-31T16:58:19.211095" level="INFO">Opening browser 'chrome' to base url 'http://automationexercise.com'.</msg>
+<msg time="2025-01-31T16:58:22.104218" level="INFO">${index} = 1</msg>
+<var>${index}</var>
+<arg>${url}</arg>
+<arg>${browser}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-01-31T16:58:19.210586" elapsed="2.894002"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-01-31T16:58:22.105240" level="INFO">Index Screen 1</msg>
+<arg>Index Screen ${index}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-01-31T16:58:22.104855" elapsed="0.000586"/>
+</kw>
+<kw name="Delete All Cookies" owner="SeleniumLibrary">
+<doc>Deletes all cookies.</doc>
+<status status="PASS" start="2025-01-31T16:58:22.105645" elapsed="0.007559"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-01-31T16:58:22.113428" elapsed="0.030090"/>
+</kw>
+<kw name="Zoom To 50%" owner="keywords">
+<kw name="Execute Javascript" owner="SeleniumLibrary">
+<msg time="2025-01-31T16:58:22.144636" level="INFO">Executing JavaScript:
+document.body.style.zoom = '50%'
+Without any arguments.</msg>
+<arg>document.body.style.zoom = '50%'</arg>
+<doc>Executes the given JavaScript code with possible arguments.</doc>
+<status status="PASS" start="2025-01-31T16:58:22.144208" elapsed="0.038781"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2025-01-31T16:58:22.684091" level="INFO">Slept 500 milliseconds.</msg>
+<arg>0.5</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2025-01-31T16:58:22.183304" elapsed="0.501156"/>
+</kw>
+<doc>Page Display to 50%</doc>
+<status status="PASS" start="2025-01-31T16:58:22.143811" elapsed="0.540826"/>
+</kw>
+<kw name="Accept Cookie" owner="keywords">
+<kw name="Get WebElement" owner="SeleniumLibrary">
+<msg time="2025-01-31T16:58:22.695882" level="INFO">${button} = &lt;selenium.webdriver.remote.webelement.WebElement (session="0a54ece3c8d6afabd15ac8a4c84a6389", element="f.5501B38D4E7B8D97BEF7CAF1A11A8830.d.B4EECDA010FAF6BEB251AB5038B355E1.e.136")&gt;</msg>
+<var>${button}</var>
+<arg>${button_accept_for_cookie}</arg>
+<doc>Returns the first WebElement matching the given ``locator``.</doc>
+<status status="PASS" start="2025-01-31T16:58:22.685251" elapsed="0.010893"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-01-31T16:58:22.696690" level="INFO">Clicking button '&lt;selenium.webdriver.remote.webelement.WebElement (session="0a54ece3c8d6afabd15ac8a4c84a6389", element="f.5501B38D4E7B8D97BEF7CAF1A11A8830.d.B4EECDA010FAF6BEB251AB5038B355E1.e.136")&gt;'.</msg>
+<arg>${button}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-01-31T16:58:22.696359" elapsed="0.094603"/>
+</kw>
+<status status="PASS" start="2025-01-31T16:58:22.684804" elapsed="0.106343"/>
+</kw>
+<kw name="Control HomePage" owner="keywords">
+<kw name="Get WebElement" owner="SeleniumLibrary">
+<msg time="2025-01-31T16:58:22.802300" level="INFO">${presentation_element} = &lt;selenium.webdriver.remote.webelement.WebElement (session="0a54ece3c8d6afabd15ac8a4c84a6389", element="f.5501B38D4E7B8D97BEF7CAF1A11A8830.d.B4EECDA010FAF6BEB251AB5038B355E1.e.3")&gt;</msg>
+<var>${presentation_element}</var>
+<arg>${presentation}</arg>
+<doc>Returns the first WebElement matching the given ``locator``.</doc>
+<status status="PASS" start="2025-01-31T16:58:22.791831" elapsed="0.010802"/>
+</kw>
+<kw name="Get Child Webelement" owner="LibraryCyd">
+<msg time="2025-01-31T16:58:22.812546" level="INFO">${child} = &lt;selenium.webdriver.remote.webelement.WebElement (session="0a54ece3c8d6afabd15ac8a4c84a6389", element="f.5501B38D4E7B8D97BEF7CAF1A11A8830.d.B4EECDA010FAF6BEB251AB5038B355E1.e.405")&gt;</msg>
+<var>${child}</var>
+<arg>parent_element=${presentation_element}</arg>
+<arg>child=${title_presentation}</arg>
+<doc>This keyword finds a child WebElement within a parent WebElement using the provided XPath.</doc>
+<status status="PASS" start="2025-01-31T16:58:22.802908" elapsed="0.009846"/>
+</kw>
+<kw name="Get Text" owner="SeleniumLibrary">
+<msg time="2025-01-31T16:58:22.824861" level="INFO">${child_text} = AutomationExercise</msg>
+<var>${child_text}</var>
+<arg>${child}</arg>
+<doc>Returns the text value of the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-01-31T16:58:22.812974" elapsed="0.012059"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${child_text}</arg>
+<arg>AutomationExercise</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2025-01-31T16:58:22.825250" elapsed="0.000363"/>
+</kw>
+<doc>Control where are in HomePage</doc>
+<status status="PASS" start="2025-01-31T16:58:22.791338" elapsed="0.034405"/>
+</kw>
+<doc>Connect to site automationexercise</doc>
+<status status="PASS" start="2025-01-31T16:58:19.207396" elapsed="3.618436"/>
+</kw>
+<kw name="When Add Products to Basket" owner="keywords">
+<kw name="Get WebElements" owner="SeleniumLibrary">
+<msg time="2025-01-31T16:58:22.842041" level="INFO">${item_list_button_add_to_cart} = [&lt;selenium.webdriver.remote.webelement.WebElement (session="0a54ece3c8d6afabd15ac8a4c84a6389", element="f.5501B38D4E7B8D97BEF7CAF1A11A8830.d.B4EECDA010FAF6BEB251AB5038B355E1.e.629")&gt;, &lt;selenium.webdri...</msg>
+<var>${item_list_button_add_to_cart}</var>
+<arg>${add_to_cart_of_all_items}</arg>
+<doc>Returns a list of WebElement objects matching the ``locator``.</doc>
+<status status="PASS" start="2025-01-31T16:58:22.830202" elapsed="0.012009"/>
+</kw>
+<for flavor="IN RANGE">
+<iter>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-01-31T16:58:22.843284" level="INFO">${ele} = &lt;selenium.webdriver.remote.webelement.WebElement (session="0a54ece3c8d6afabd15ac8a4c84a6389", element="f.5501B38D4E7B8D97BEF7CAF1A11A8830.d.B4EECDA010FAF6BEB251AB5038B355E1.e.629")&gt;</msg>
+<var>${ele}</var>
+<arg>${item_list_button_add_to_cart}[${i}]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-01-31T16:58:22.842962" elapsed="0.000530"/>
+</kw>
+<kw name="Mouse Over" owner="SeleniumLibrary">
+<msg time="2025-01-31T16:58:22.844059" level="INFO">Simulating Mouse Over on element '&lt;selenium.webdriver.remote.webelement.WebElement (session="0a54ece3c8d6afabd15ac8a4c84a6389", element="f.5501B38D4E7B8D97BEF7CAF1A11A8830.d.B4EECDA010FAF6BEB251AB5038B355E1.e.629")&gt;'.</msg>
+<arg>${ele}</arg>
+<doc>Simulates hovering the mouse over the element ``locator``.</doc>
+<status status="PASS" start="2025-01-31T16:58:22.843688" elapsed="0.279530"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-01-31T16:58:23.123844" level="INFO">Clicking element '&lt;selenium.webdriver.remote.webelement.WebElement (session="0a54ece3c8d6afabd15ac8a4c84a6389", element="f.5501B38D4E7B8D97BEF7CAF1A11A8830.d.B4EECDA010FAF6BEB251AB5038B355E1.e.629")&gt;'.</msg>
+<msg time="2025-01-31T16:58:23.312370" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-35.png"&gt;&lt;img src="selenium-screenshot-35.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2025-01-31T16:58:23.312726" level="FAIL">ElementNotInteractableException: Message: element not interactable
+  (Session info: chrome=132.0.6834.84)
+Stacktrace:
+	GetHandleVerifier [0x00007FF77F7B02F5+28725]
+	(No symbol) [0x00007FF77F712AE0]
+	(No symbol) [0x00007FF77F5A4F39]
+	(No symbol) [0x00007FF77F5FA7D4]
+	(No symbol) [0x00007FF77F5EC6B4]
+	(No symbol) [0x00007FF77F61FFAA]
+	(No symbol) [0x00007FF77F5EBF86]
+	(No symbol) [0x00007FF77F6201C0]
+	(No symbol) [0x00007FF77F640181]
+	(No symbol) [0x00007FF77F61FD53]
+	(No symbol) [0x00007FF77F5EA0E3]
+	(No symbol) [0x00007FF77F5EB471]
+	GetHandleVerifier [0x00007FF77FADF30D+3366989]
+	GetHandleVerifier [0x00007FF77FAF12F0+3440688]
+	GetHandleVerifier [0x00007FF77FAE78FD+3401277]
+	GetHandleVerifier [0x00007FF77F87AAAB+858091]
+	(No symbol) [0x00007FF77F71E74F]
+	(No symbol) [0x00007FF77F71A304]
+	(No symbol) [0x00007FF77F71A49D]
+	(No symbol) [0x00007FF77F708B69]
+	BaseThreadInitThunk [0x00007FFEA235259D+29]
+	RtlUserThreadStart [0x00007FFEA45AAF38+40]
+</msg>
+<arg>${ele}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="FAIL" start="2025-01-31T16:58:23.123532" elapsed="0.193029">ElementNotInteractableException: Message: element not interactable
+  (Session info: chrome=132.0.6834.84)
+Stacktrace:
+	GetHandleVerifier [0x00007FF77F7B02F5+28725]
+	(No symbol) [0x00007FF77F712AE0]
+	(No symbol) [0x00007FF77F5A4F39]
+	(No symbol) [0x00007FF77F5FA7D4]
+	(No symbol) [0x00007FF77F5EC6B4]
+	(No symbol) [0x00007FF77F61FFAA]
+	(No symbol) [0x00007FF77F5EBF86]
+	(No symbol) [0x00007FF77F6201C0]
+	(No symbol) [0x00007FF77F640181]
+	(No symbol) [0x00007FF77F61FD53]
+	(No symbol) [0x00007FF77F5EA0E3]
+	(No symbol) [0x00007FF77F5EB471]
+	GetHandleVerifier [0x00007FF77FADF30D+3366989]
+	GetHandleVerifier [0x00007FF77FAF12F0+3440688]
+	GetHandleVerifier [0x00007FF77FAE78FD+3401277]
+	GetHandleVerifier [0x00007FF77F87AAAB+858091]
+	(No symbol) [0x00007FF77F71E74F]
+	(No symbol) [0x00007FF77F71A304]
+	(No symbol) [0x00007FF77F71A49D]
+	(No symbol) [0x00007FF77F708B69]
+	BaseThreadInitThunk [0x00007FFEA235259D+29]
+	RtlUserThreadStart [0x00007FFEA45AAF38+40]
+</status>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<arg>5000ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="NOT RUN" start="2025-01-31T16:58:23.316855" elapsed="0.000178"/>
+</kw>
+<var name="${i}">0</var>
+<status status="FAIL" start="2025-01-31T16:58:22.842734" elapsed="0.474433">ElementNotInteractableException: Message: element not interactable
+  (Session info: chrome=132.0.6834.84)
+Stacktrace:
+	GetHandleVerifier [0x00007FF77F7B02F5+28725]
+	(No symbol) [0x00007FF77F712AE0]
+	(No symbol) [0x00007FF77F5A4F39]
+	(No symbol) [0x00007FF77F5FA7D4]
+	(No symbol) [0x00007FF77F5EC6B4]
+	(No symbol) [0x00007FF77F61FFAA]
+	(No symbol) [0x00007FF77F5EBF86]
+	(No symbol) [0x00007FF77F6201C0]
+	(No symbol) [0x00007FF77F640181]
+	(No symbol) [0x00007FF77F61FD53]
+	(No symbol) [0x00007FF77F5EA0E3]
+	(No symbol) [0x00007FF77F5EB471]
+	GetHandleVerifier [0x00007FF77FADF30D+3366989]
+	GetHandleVerifier [0x00007FF77FAF12F0+3440688]
+	GetHandleVerifier [0x00007FF77FAE78FD+3401277]
+	GetHandleVerifier [0x00007FF77F87AAAB+858091]
+	(No symbol) [0x00007FF77F71E74F]
+	(No symbol) [0x00007FF77F71A304]
+	(No symbol) [0x00007FF77F71A49D]
+	(No symbol) [0x00007FF77F708B69]
+	BaseThreadInitThunk [0x00007FFEA235259D+29]
+	RtlUserThreadStart [0x00007FFEA45AAF38+40]
+</status>
+</iter>
+<var>${i}</var>
+<value>2</value>
+<status status="FAIL" start="2025-01-31T16:58:22.842347" elapsed="0.474968">ElementNotInteractableException: Message: element not interactable
+  (Session info: chrome=132.0.6834.84)
+Stacktrace:
+	GetHandleVerifier [0x00007FF77F7B02F5+28725]
+	(No symbol) [0x00007FF77F712AE0]
+	(No symbol) [0x00007FF77F5A4F39]
+	(No symbol) [0x00007FF77F5FA7D4]
+	(No symbol) [0x00007FF77F5EC6B4]
+	(No symbol) [0x00007FF77F61FFAA]
+	(No symbol) [0x00007FF77F5EBF86]
+	(No symbol) [0x00007FF77F6201C0]
+	(No symbol) [0x00007FF77F640181]
+	(No symbol) [0x00007FF77F61FD53]
+	(No symbol) [0x00007FF77F5EA0E3]
+	(No symbol) [0x00007FF77F5EB471]
+	GetHandleVerifier [0x00007FF77FADF30D+3366989]
+	GetHandleVerifier [0x00007FF77FAF12F0+3440688]
+	GetHandleVerifier [0x00007FF77FAE78FD+3401277]
+	GetHandleVerifier [0x00007FF77F87AAAB+858091]
+	(No symbol) [0x00007FF77F71E74F]
+	(No symbol) [0x00007FF77F71A304]
+	(No symbol) [0x00007FF77F71A49D]
+	(No symbol) [0x00007FF77F708B69]
+	BaseThreadInitThunk [0x00007FFEA235259D+29]
+	RtlUserThreadStart [0x00007FFEA45AAF38+40]
+</status>
+</for>
+<status status="FAIL" start="2025-01-31T16:58:22.827736" elapsed="0.489864">ElementNotInteractableException: Message: element not interactable
+  (Session info: chrome=132.0.6834.84)
+Stacktrace:
+	GetHandleVerifier [0x00007FF77F7B02F5+28725]
+	(No symbol) [0x00007FF77F712AE0]
+	(No symbol) [0x00007FF77F5A4F39]
+	(No symbol) [0x00007FF77F5FA7D4]
+	(No symbol) [0x00007FF77F5EC6B4]
+	(No symbol) [0x00007FF77F61FFAA]
+	(No symbol) [0x00007FF77F5EBF86]
+	(No symbol) [0x00007FF77F6201C0]
+	(No symbol) [0x00007FF77F640181]
+	(No symbol) [0x00007FF77F61FD53]
+	(No symbol) [0x00007FF77F5EA0E3]
+	(No symbol) [0x00007FF77F5EB471]
+	GetHandleVerifier [0x00007FF77FADF30D+3366989]
+	GetHandleVerifier [0x00007FF77FAF12F0+3440688]
+	GetHandleVerifier [0x00007FF77FAE78FD+3401277]
+	GetHandleVerifier [0x00007FF77F87AAAB+858091]
+	(No symbol) [0x00007FF77F71E74F]
+	(No symbol) [0x00007FF77F71A304]
+	(No symbol) [0x00007FF77F71A49D]
+	(No symbol) [0x00007FF77F708B69]
+	BaseThreadInitThunk [0x00007FFEA235259D+29]
+	RtlUserThreadStart [0x00007FFEA45AAF38+40]
+</status>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2025-01-31T16:58:23.321459" elapsed="2.124656"/>
+</kw>
+<status status="FAIL" start="2025-01-31T16:58:19.206251" elapsed="6.240248">ElementNotInteractableException: Message: element not interactable
+  (Session info: chrome=132.0.6834.84)
+Stacktrace:
+	GetHandleVerifier [0x00007FF77F7B02F5+28725]
+	(No symbol) [0x00007FF77F712AE0]
+	(No symbol) [0x00007FF77F5A4F39]
+	(No symbol) [0x00007FF77F5FA7D4]
+	(No symbol) [0x00007FF77F5EC6B4]
+	(No symbol) [0x00007FF77F61FFAA]
+	(No symbol) [0x00007FF77F5EBF86]
+	(No symbol) [0x00007FF77F6201C0]
+	(No symbol) [0x00007FF77F640181]
+	(No symbol) [0x00007FF77F61FD53]
+	(No symbol) [0x00007FF77F5EA0E3]
+	(No symbol) [0x00007FF77F5EB471]
+	GetHandleVerifier [0x00007FF77FADF30D+3366989]
+	GetHandleVerifier [0x00007FF77FAF12F0+3440688]
+	GetHandleVerifier [0x00007FF77FAE78FD+3401277]
+	GetHandleVerifier [0x00007FF77F87AAAB+858091]
+	(No symbol) [0x00007FF77F71E74F]
+	(No symbol) [0x00007FF77F71A304]
+	(No symbol) [0x00007FF77F71A49D]
+	(No symbol) [0x00007FF77F708B69]
+	BaseThreadInitThunk [0x00007FFEA235259D+29]
+	RtlUserThreadStart [0x00007FFEA45AAF38+40]
+</status>
+</test>
+<status status="FAIL" start="2025-01-31T16:58:18.907303" elapsed="6.541771"/>
+</suite>
+<status status="FAIL" start="2025-01-31T16:58:18.904482" elapsed="6.545941"/>
+</suite>
+<status status="FAIL" start="2025-01-31T16:58:18.902722" elapsed="6.548807"/>
+</suite>
+<status status="FAIL" start="2025-01-31T16:58:18.886351" elapsed="6.566622"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Robot Framework Automationexercise" id="s1" pass="0" fail="1" skip="0">Robot Framework Automationexercise</stat>
+<stat name="Tests" id="s1-s1" pass="0" fail="1" skip="0">Robot Framework Automationexercise.Tests</stat>
+<stat name="Tests" id="s1-s1-s1" pass="0" fail="1" skip="0">Robot Framework Automationexercise.Tests.Tests</stat>
+<stat name="Example_Test_Sauce_Demo" id="s1-s1-s1-s1" pass="0" fail="1" skip="0">Robot Framework Automationexercise.Tests.Tests.Example_Test_Sauce_Demo</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
