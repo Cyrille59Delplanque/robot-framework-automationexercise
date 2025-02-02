@@ -13,10 +13,11 @@ Scenario : Simple Search
     Then All products display contains Dress
 
 Scenario : Address Check
+    [Teardown]    Teardown Delete RobertLucien account
     Given I am on automationexercise website
-    # When RobertLucien create account
-    # And Add Products to Basket
-    When Add Products to Basket
+    When RobertLucien create account
+    And Proceed to pay 2 ordered Products
+    Then Delivery Address of RobertLucien is confirmed
 
 # Cliquez sur le bouton « Inscription/Connexion »
 # Remplissez tous les détails dans l'inscription et créez un compte
@@ -29,3 +30,5 @@ Scenario : Address Check
 # Vérifiez que l'adresse de livraison et l'adresse de facturation sont les mêmes que celles renseignées lors de l'enregistrement du compte
 # Cliquez sur le bouton « Supprimer le compte »
 # Vérifiez « COMPTE SUPPRIMÉ ! » et cliquez sur le bouton « Continuer »
+
+

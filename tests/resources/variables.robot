@@ -21,6 +21,8 @@ ${title_presentation}    tag=h1
 ${to_product}    xpath=//a[.=' Products']
 ${to_signup}    xpath=//a[contains(.,'Signup / Login')]
 ${login_in_as}    xpath=//a[contains(.,'Logged in as')]/b
+${to_cart}    xpath=//a[contains(.,'Cart')]
+${delete_account}    xpath=//a[contains(.,'Delete Account')]
 
 #Product
 ${product_title}    xpath=//h2[@class='title text-center']
@@ -28,9 +30,10 @@ ${search_bar}    id=search_product
 ${search_bar_button}    id=submit_search
 ${all_items}    class=features_items
 ${description_of_item}    xpath=//div[@class='product-overlay']//p
-${add_to_cart_of_all_items}    xpath=//div[@class='product-overlay']//a[.='Add to cart']
-${text_modal}    xpath=//div[@class='modal_content']//h4
-${modal_button}    xpath=//div[@class='modal_content']//button
+${add_to_cart_of_all_items_to_move}    xpath=//div[@class='productinfo text-center']//a
+${add_to_cart_of_all_items}    xpath=//div[@class='product-overlay']//a
+${text_modal}    xpath=//div[@class='modal-content']//h4
+${modal_button}    xpath=//div[@class='modal-content']//button
 
 #Login
 ${name}=    name=name
@@ -44,7 +47,7 @@ ${signup_title}    xpath=//*[@class='signup-form']/h2
 ${continue_button}    xpath=//*[@data-qa='continue-button']
 
 #Account Information
-${account_title}    xpath=//*[@class='login-form']/b
+${account_title}    xpath=//*[@class='title text-center']/b
 ${checkbox_mr}    id=id_gender1
 ${checkbox_mrs}    id=id_gender2
 ${password_account}    id=password
@@ -65,59 +68,15 @@ ${zipcode}    id=zipcode
 ${mobile_number}    id=mobile_number
 ${button_create_account}    xpath=//*[@data-qa='create-account']
 
-#account created or deleted
-${title}    xpath=//*[@id='form']/h2
+#cart
+${shopping title}    xpath=//*[@class='breadcrumb']//li[@class='active']
+${button_proceed_to_checkout}    xpath=//*[@id='do_action']/div[@class='container']//a
+#checkOut
+${address_title}    xpath=//*[@class='address_title']//h3
+${address_name}    xpath=//*[@class='address_firstname address_lastname']
+${address_add}    xpath=//*[@class='address_address1 address_address2']
+${address_city}    xpath=//*[@class='address_city address_state_name address_postcode']
+${address_country}    xpath=//*[@class='address_country_name']
+${address_phone}    xpath=//*[@class='address_phone']
 
-# ${list_main_menu}    class:card-up
-# ${input_search_box}    id=searchBox
-# ${search_box_button}    id=basic-addon2
-# ${table_data_row}    xpath://*[@role='rowgroup']
-# ${table_data_cell}    xpath:./descendant::*[@role='gridcell']
-
-# ${login}    xpath://li[.='Login']
-# ${selectable}    xpath://li[.='Selectable']
-# ${datepicker}    xpath://li[.='Date Picker']
-# ${alerts}    xpath://li[.='Alerts']
-# ${checkbox}    xpath://li[.='Check Box']
-# ${morbiselect}    xpath://li[.='Morbi leo risus']
-# ${crasselect}    xpath://li[.='Cras justo odio']
-# ${nineselect}    xpath://li[.='Nine']
-# ${fiveselect}    xpath://li[.='Five']
-# ${oneselect}    xpath://li[.='One']
-# ${dapibusselect}    xpath://li[.='Dapibus ac facilisis in']
-# ${portaselect}    xpath://li[.='Porta ac consectetur ac']
-
-# ${newuserbutton}    newUser
-# ${newuserfirstname}    firstname
-# ${newuserlastname}    lastname
-# ${newuserusername}    userName
-# ${newuserpassword}    password
-# ${newuserregisterbutton}    register
-# ${newusergotologin}    gotologin
-# ${userlogin}    login
-
-# ${loggedusername}    userName-value
-
-# ${captcha}    g-recaptcha
-
-# ${gotogrid}    demo-tab-grid
-# ${gotolist}    demo-tab-list
-
-# ${list_isactive}    mt-2 list-group-item active list-group-item-action
-# ${list_isinactive}     mt-2 list-group-item list-group-item-action
-
-# ${dateandtime}    dateAndTimePickerInput
-
-# ${alertbutton}    alertButton
-# ${timeralertbutton}    timerAlertButton
-# ${confirmbutton}    confirmButton
-# ${promptbutton}    promtButton
-
-# ${confirmresult}    confirmResult
-# ${promptresult}    promptResult
-
-# ${checkboxexpandall}    xpath://*[@title='Expand all']
-# ${home}    xpath://*[@for='tree-node-home']
-# ${office}    xpath://*[@for='tree-node-office']
-# ${excelfile}    xpath://*[@for='tree-node-excelFile']
 

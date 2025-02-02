@@ -28,10 +28,17 @@ Control HomePage
 Go to ProductsPage
     [Documentation]    Go to ProductsPage
     Click Link    ${to_product}
+    Zoom To 50%
 
 Go to SignUp
     [Documentation]    Go to ProductsPage
     Click Link    ${to_signup}
+    Zoom To 50%
+
+Go to Cart
+    [Documentation]    Go to Cart Page
+    Click Link    ${to_cart}
+    Zoom To 50%
 
 Control ProductsPage
     [Documentation]    Control where are on ProductsPage
@@ -76,6 +83,7 @@ Input ${user} in Signup
     Input Text    ${name}    ${user_dict['${user}']["Name"]}
     Input Text    ${email_signup}    ${user_dict['${user}']["Email"]}
     Click Button    ${sign_up_button}
+    Zoom To 50%
 
 Input ${user} in Account Information 
     # read the raw data
@@ -118,37 +126,118 @@ Input ${user} in Account Address
     Input Text    ${zipcode}    ${user_dict['${user}']["Zipcode"]}
     Input Text    ${mobile_number}    ${user_dict['${user}']["Mobile Number"]}
 
-Verify SignUp
+Verify SignUp Page
+    Wait Until Element Is Visible    ${signup_title}
     ${title_text}=    Get Text    ${signup_title}
     Should Be Equal    ${title_text}    New User Signup!
 
+Verify Cart Page
+    Wait Until Element Is Visible    ${shopping title}
+    ${title_text}=    Get Text    ${shopping title}
+    Should Be Equal    ${title_text}    Shopping Cart
+
 ${user} create account
     Go to SignUp
-    Verify SignUp
+    Verify SignUp Page
     Input ${user} in Signup
+    Verify AccountPage
     Input ${user} in Account Information 
     Input ${user} in Account Address
     Click Button    ${button_create_account}
+    Verify Account Created
+    Verify ${user} is Logged
+
+Verify Account Page
+    Wait Until Element Is Visible    ${account_title}
+    ${account_page_title}=    Get Text    ${account_title}
+    Should Be Equal    ${account_page_title}    ENTER ACCOUNT INFORMATION
+
+Verify Account Created
+    Wait Until Element Is Visible    ${account_title}
+    ${account_page_title}=    Get Text    ${account_title}
+    Should Be Equal    ${account_page_title}    ACCOUNT CREATED!
     Wait Until Element Is Visible    ${continue_button}
     Click Element    ${continue_button}
-    Verify ${user} is Logged
+    Zoom To 50%
+
+Verify Account Deleted    
+    Wait Until Element Is Visible    ${account_title}
+    ${account_page_title}=    Get Text    ${account_title}
+    Should Be Equal    ${account_page_title}    ACCOUNT DELETED!
+    Wait Until Element Is Visible    ${continue_button}
+    Click Element    ${continue_button}
+    Zoom To 50%
 
 Verify ${user} is Logged
     ${text_of_user_logged}=    Get Text    ${login_in_as}
     Should Be Equal    ${text_of_user_logged}    ${user}
 
-Add Products to Basket
-    ${item_list_button_add_to_cart}=    Get WebElements    ${add_to_cart_of_all_items}
-    FOR    ${i}    IN RANGE    2
+Add ${nb_of_products} Products to Basket
+    ${item_list_button_add_to_cart}=    Get WebElements    ${add_to_cart_of_all_items_to_move}
+    ${item_list_button_add_to_cart_cl}=    Get WebElements    ${add_to_cart_of_all_items}
+    FOR    ${i}    IN RANGE    ${nb_of_products}
         ${ele}=    Set Variable    ${item_list_button_add_to_cart}[${i}]
+        ${ele_to_click}=    Set Variable    ${item_list_button_add_to_cart_cl}[${i}]
         Mouse Over    ${ele}
-        # ${text_to_control}=    Get Text    ${text_modal}
-        # Click Button    ${modal_button}
+        Click Button    ${ele_to_click}
+        Wait Until Element Is Visible    ${text_modal}
+        ${text_to_control}=    Get Text    ${text_modal}
+        Should Be Equal    ${text_to_control}    Added!
+        Click Button    ${modal_button}
     END
 
+Proceed to pay ${nb_of_products} ordered Products
+    Add ${nb_of_products} Products to Basket
+    Go to Cart
+    Verify Cart Page
+    Process to Checkout
+    Sleep    30000ms
+    
 
+Process to Checkout
+    Click Element    ${button_proceed_to_checkout}
 
+Delete ${user} account
+    Click Element    ${delete_account}
+    Verify Account Deleted
  
+Delivery Address of ${user} is confirmed
+    Verify CheckOut
+    Verify Address Title
+    # read the raw data
+    ${json}=    Get file    ./tests/resources/user_data.json
+    # convert the data to a python object
+    ${user_dict}=    Evaluate    json.loads('''${json}''')    json
+    ${text_address_name}=    Get Text    ${address_name}
+    ${text_reference}=    Evaluate    "${user_dict['${user}']["Gender"]}" + ". " + "${user_dict['${user}']["First Name"]}" + " " + "${user_dict['${user}']["Last Name"]}"
+    Should Be Equal    ${text_address_name}    ${text_reference}
+    ${items_address}=    Get WebElements    ${address_add}
+    ${text_address_company}=    Get Text    ${items_address}[0]
+    ${text_address_address1}=    Get Text    ${items_address}[1]
+    ${text_address_address2}=    Get Text    ${items_address}[2]
+    Should Be Equal    ${text_address_company}    ${user_dict['${user}']["Company"]}
+    Should Be Equal    ${text_address_address1}    ${user_dict['${user}']["Address1"]}
+    Should Be Equal    ${text_address_address2}    ${user_dict['${user}']["Address2"]}   
+    ${text_reference}=    Evaluate    "${user_dict['${user}']["City"]}" + " " + "${user_dict['${user}']["State"]}" + " " + "${user_dict['${user}']["Zipcode"]}"
+    ${text_city}=    Get Text    ${address_city}
+    Should Be Equal    ${text_reference}    ${text_city}
+    ${text_country}=    Get Text    ${address_country}
+    Should Be Equal    ${text_country}    ${user_dict['${user}']["Country"]}
+    ${text_phone}=    Get Text    ${address_phone}
+    Should Be Equal    ${text_phone}    ${user_dict['${user}']["Mobile Number"]}
+
+Verify Address Title
+    ${info_title}=    Get Text    ${address_title}
+    Should Be Equal    ${info_title}    YOUR DELIVERY ADDRESS
+
+Verify CheckOut
+    Wait Until Element Is Visible    ${shopping title}
+    ${title_text}=    Get Text    ${shopping title}
+    Should Be Equal    ${title_text}    Checkout
+
+Teardown Delete ${user} account
+    Delete ${user} account
+    Close Browser
 
 
 # Go to Book Store Application
