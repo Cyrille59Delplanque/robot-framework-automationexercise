@@ -322,10 +322,10 @@ Copy File if exists
     ${directory_download}=    Get Directory for Download
     ${files}=    List Files In Directory    ${directory_download}
     IF    '${file_name}' in ${files}
-        ${DEST_FILE}=    Evaluate    "../archive/" + "${file_name}"
-        Move File    ${file_name}    ${DEST_FILE}
-        File Should Exist    ${DEST_FILE}
-        File Should Not Exist    ${file_name}
+        ${DEST_FILE}=    Evaluate    "/archive/" + "${file_name}"
+        Move File    ${directory_download}/${file_name}    ${directory_download}${DEST_FILE}
+        File Should Exist    ${directory_download}${DEST_FILE}
+        File Should Not Exist    ${directory_download}/${file_name}
     END
 
 Wait Until File Exists
