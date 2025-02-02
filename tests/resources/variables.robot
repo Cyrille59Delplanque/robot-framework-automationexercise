@@ -30,6 +30,7 @@ ${search_bar}    id=search_product
 ${search_bar_button}    id=submit_search
 ${all_items}    class=features_items
 ${description_of_item}    xpath=//div[@class='product-overlay']//p
+${price_of_item}    xpath=//div[@class='product-overlay']//h2
 ${add_to_cart_of_all_items_to_move}    xpath=//div[@class='productinfo text-center']//a
 ${add_to_cart_of_all_items}    xpath=//div[@class='product-overlay']//a
 ${text_modal}    xpath=//div[@class='modal-content']//h4
@@ -71,6 +72,7 @@ ${button_create_account}    xpath=//*[@data-qa='create-account']
 #cart
 ${shopping title}    xpath=//*[@class='breadcrumb']//li[@class='active']
 ${button_proceed_to_checkout}    xpath=//*[@id='do_action']/div[@class='container']//a
+${register_link}    xpath=//*[@id="checkoutModal"]//u
 #checkOut
 ${address_title}    xpath=//*[@class='address_title']//h3
 ${address_name}    xpath=//*[@class='address_firstname address_lastname']
@@ -78,5 +80,22 @@ ${address_add}    xpath=//*[@class='address_address1 address_address2']
 ${address_city}    xpath=//*[@class='address_city address_state_name address_postcode']
 ${address_country}    xpath=//*[@class='address_country_name']
 ${address_phone}    xpath=//*[@class='address_phone']
+${product_price}    xpath=//*[starts-with(@id, 'product-')]//td[@class='cart_price']//p
+${product_desc}    xpath=//*[starts-with(@id, 'product-')]//td[@class='cart_description']//h4
+${product_quantity}    xpath=//*[starts-with(@id, 'product-')]//td[@class='cart_quantity']//button
+${overall_price}    xpath=//*[@class='cart_menu']//p[@class='cart_total_price']
+${button_place_order}    xpath=//*[@id='cart_items']//a[starts-with(@class,'btn')]
+${commentary}    xpath=//*[@name='message']
 
+#payment
+${payment title}    xpath=//*[@class='breadcrumb']//li[@class='active']
+${button pay}    id=submit
+${field_name}    xpath=//*[@name='name_on_card']
+${field_card_number}   xpath=//*[@name='card_number']
+${field_cvc}    xpath=//*[@name='cvc']
+${field_expiry_month}    xpath=//*[@name='expiry_month']
+${field_expiry_year}    xpath=//*[@name='expiry_year']
+${button_download}    xpath=//a[contains(@class,'check_out')]
 
+#global
+${DOWNLOAD_DIR}    \\tests\\download

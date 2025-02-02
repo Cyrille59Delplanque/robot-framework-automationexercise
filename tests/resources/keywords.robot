@@ -1,6 +1,7 @@
 *** Settings ***
 Library    Collections
 Library    Dialogs
+Library    OperatingSystem
 Library    Screenshot
 Library    String
 Library    SeleniumLibrary
@@ -46,10 +47,18 @@ Control ProductsPage
     ${product_title_on_site}=    Get Text    ${product_title}
     Should Be Equal    ${product_title_on_site}    ${text_ref}
 
+Get Directory for Download
+    ${current_directory}=    Evaluate    os.getcwd()    os
+    RETURN    ${current_directory}${DOWNLOAD_DIR}
+
 I am on automationexercise website
     [Documentation]    Connect to site automationexercise
-    ${index}=    Open Browser    ${url}    ${browser}
-    Log    Index Screen ${index}   
+    ${directory_download}=    Get Directory for Download
+    ${options}=    Create Dictionary    download.default_directory=${directory_download}
+    ${chrome_options}=     Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
+    Call Method    ${chrome_options}    add_experimental_option    prefs    ${options}
+    ${index}=    Open Browser    ${url}    ${browser}    options=${chrome_options}
+    Log    Index Screen ${index}
     Delete All Cookies
     Maximize Browser Window
     Zoom To 50%
@@ -75,14 +84,14 @@ All products display contains ${words_to_contain}
     END
     
 Input ${user} in Signup
-    ${user_dict}=    Get User Datas    ${user}
+    ${user_dict}=    Get User Standard Datas    ${user}
     Input Text    ${name}    ${user_dict["Name"]}
     Input Text    ${email_signup}    ${user_dict["Email"]}
     Click Button    ${sign_up_button}
     Zoom To 50%
 
 Input ${user} in Account Information 
-    ${user_dict}=    Get User Datas    ${user}
+    ${user_dict}=    Get User Standard Datas    ${user}
     IF    '${user_dict["Gender"]}' == 'Mr'
         Click Element    ${checkbox_mr}
     ELSE
@@ -102,7 +111,7 @@ Input ${user} in Account Information
     Select From List By Value    ${years}    ${year}
 
 Input ${user} in Account Address
-    ${user_dict}=    Get User Datas    ${user}
+    ${user_dict}=    Get User Standard Datas    ${user}
     Input Text    ${first_name}    ${user_dict["First Name"]}
     Input Text    ${last_name}    ${user_dict["Last Name"]}
     Input Text    ${company}    ${user_dict["Company"]}
@@ -152,6 +161,11 @@ Verify Account ${type_of_creation}
     Click Element    ${continue_button}
     Zoom To 50%
 
+Verify Payment Done
+    Wait Until Element Is Visible    ${account_title}
+    ${account_page_title}=    Get Text    ${account_title}
+    Should Be Equal    ${account_page_title}    ORDER PLACED!
+
 Verify ${user} is Logged
     ${text_of_user_logged}=    Get Text    ${login_in_as}
     Should Be Equal    ${text_of_user_logged}    ${user}
@@ -159,22 +173,31 @@ Verify ${user} is Logged
 Add ${nb_of_products} Products to Basket
     ${item_list_button_add_to_cart}=    Get WebElements    ${add_to_cart_of_all_items_to_move}
     ${item_list_button_add_to_cart_cl}=    Get WebElements    ${add_to_cart_of_all_items}
+    ${items_description}=    Get WebElements    ${description_of_item}
+    ${items_price}=    Get WebElements    ${price_of_item}
+    ${list_product}=    Create List
     FOR    ${i}    IN RANGE    ${nb_of_products}
         ${ele}=    Set Variable    ${item_list_button_add_to_cart}[${i}]
         ${ele_to_click}=    Set Variable    ${item_list_button_add_to_cart_cl}[${i}]
         Mouse Over    ${ele}
+        ${item_price}=    Get Text    ${items_price}[${i}]
+        ${item_desc}=    Get Text     ${items_description}[${i}]
+        ${dict_product}=    Create Dictionary     Price=${item_price}     Desc=${item_desc}    Quantity=1
+        Append To List    ${list_product}     ${dict_product}
         Click Button    ${ele_to_click}
         Wait Until Element Is Visible    ${text_modal}
         ${text_to_control}=    Get Text    ${text_modal}
         Should Be Equal    ${text_to_control}    Added!
         Click Button    ${modal_button}
     END
+    RETURN    ${list_product}
 
 Proceed to pay ${nb_of_products} ordered Products
-    Add ${nb_of_products} Products to Basket
+    ${list_product}=    Add ${nb_of_products} Products to Basket
     Go to Cart
     Verify Cart Page
-    Process to Checkout   
+    Process to Checkout
+    RETURN    ${list_product} 
 
 Process to Checkout
     Click Element    ${button_proceed_to_checkout}
@@ -186,7 +209,7 @@ Delete ${user} account
 Delivery Address of ${user} is confirmed
     Verify CheckOut
     Verify Address Title
-    ${user_dict}=    Get User Datas    ${user}
+    ${user_dict}=    Get User Standard Datas    ${user}
     ${text_address_name}=    Get Text    ${address_name}
     ${text_reference}=    Evaluate    "${user_dict["Gender"]}" + ". " + "${user_dict["First Name"]}" + " " + "${user_dict["Last Name"]}"
     Should Be Equal    ${text_address_name}    ${text_reference}
@@ -218,10 +241,104 @@ Teardown Delete ${user} account
     Delete ${user} account
     Close Browser
 
-Get User Datas
+Get User ${type} Datas
     [Arguments]    ${user}
     # read the raw data
-    ${json}=    Get file    ./tests/resources/user_data.json
+    IF    "${type}" == "Standard"
+        ${json}=    Get file    ./tests/resources/user_data.json
+    ELSE IF    "${type}" == "Payment"
+        ${json}=    Get file    ./tests/resources/payment_data.json         
+    END
     # convert the data to a python object
     ${user_dict}=    Evaluate    json.loads('''${json}''')    json
     RETURN    ${user_dict}[${user}]
+
+Go to Register
+    ${link_register_text}=    Get Text    ${register_link}
+    Should Be Equal    ${link_register_text}   Register / Login
+    Click Element    ${register_link}
+
+Products are conform
+    [Arguments]    ${list_product}    ${nb_of_product}
+    ${products_price}=    Get WebElements    ${product_price}
+    ${products_desc}=    Get WebElements    ${product_desc}
+    ${products_quantity}=    Get WebElements    ${product_quantity}
+    FOR    ${i}    IN RANGE    ${nb_of_product}
+        Log    Enter Loop
+        ${price}=    Get Text    ${products_price}[${i}]
+        Log    ${price}
+        Should Be Equal    ${list_product}[${i}][Price]    ${price}
+        ${desc}=    Get Text    ${products_desc}[${i}]
+        Should Be Equal    ${list_product}[${i}][Desc]    ${desc}
+        ${qty}=    Get Text     ${products_quantity}[${i}]
+        Should Be Equal    ${list_product}[${i}][Quantity]    ${qty}
+    END
+    
+
+Proceed to pay ${nb_of_product} ordered Products while creating ${user} account
+    ${list_product}=    Proceed to pay ${nb_of_product} ordered Products
+    Go to Register
+    ${user} create account
+    Go to Cart
+    Verify Cart Page
+    Process to Checkout
+    Zoom To 50%
+    Verify CheckOut
+    Verify Address Title
+    Delivery Address of ${user} is confirmed
+    Products are conform    ${list_product}    ${nb_of_product}
+    Add Comment and place Order    ${user}
+    Fill Payment and Pay    ${user}
+    Verify Payment Done
+
+Add Comment and place Order
+    [Arguments]    ${user}
+    Scroll Element Into View    ${button_place_order}
+    Input Text    ${commentary}    Commande de ${user}
+    Execute Javascript    window.scrollTo(0, document.body.scrollHeight)
+    Click Element    ${button_place_order}
+
+Fill Payment and Pay
+    [Arguments]    ${user}
+    ${payment_data}=    Get User Payment Datas    ${user}
+    Input Text    ${field_name}    ${payment_data}[Card Name]
+    Input Text    ${field_card_number}    ${payment_data}[Card Number]
+    Input Text    ${field_cvc}    ${payment_data}[CVC]
+    Input Text    ${field_expiry_month}    ${payment_data}[Expiration Date][:2]
+    Input Text    ${field_expiry_year}    ${payment_data}[Expiration Date][-4:]
+    Click Button    ${button pay}
+
+Download Invoice ${file_name}
+    Copy File if exists    ${file_name}
+    Click Element    ${button_download}
+    ${directory_download}=    Get Directory for Download
+    Wait Until File Exists    ${directory_download}/${file_name}    60
+
+Invoice ${file_name} is Downloaded
+    Verify File in Directory    ${file_name}
+
+Copy File if exists
+    [Arguments]    ${file_name}
+    ${directory_download}=    Get Directory for Download
+    ${files}=    List Files In Directory    ${directory_download}
+    IF    '${file_name}' in ${files}
+        ${DEST_FILE}=    Evaluate    "../archive/" + "${file_name}"
+        Move File    ${file_name}    ${DEST_FILE}
+        File Should Exist    ${DEST_FILE}
+        File Should Not Exist    ${file_name}
+    END
+
+Wait Until File Exists
+    [Arguments]    ${file_path}    ${timeout}
+    FOR    ${i}    IN RANGE    ${timeout}
+        Run Keyword If    ${i} > 0    Sleep    1
+        Run Keyword If    ${i} == ${timeout}    Fail    File ${file_path} was not download before timeout
+        ${status}=    Run Keyword And Return Status    File Should Exist    ${file_path}
+        Exit For Loop If    ${status}
+    END
+
+Verify File in Directory
+    [Arguments]    ${file_name}
+    ${directory_download}=    Get Directory for Download
+    ${files}=    List Files In Directory   ${directory_download}
+    Should Contain    ${files}    ${file_name}
