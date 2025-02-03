@@ -13,19 +13,15 @@ Scenario : Simple Search
     Then All products display contains Dress
 
 Scenario : Address Check
+    [Teardown]    Teardown Delete RobertLucien account
     Given I am on automationexercise website
-    # When RobertLucien create account
-    # And Add Products to Basket
-    When Add Products to Basket
+    When RobertLucien create account
+    And Proceed to pay 2 ordered Products
+    Then Delivery Address of RobertLucien is confirmed
 
-# Cliquez sur le bouton « Inscription/Connexion »
-# Remplissez tous les détails dans l'inscription et créez un compte
-# Vérifiez « COMPTE CRÉÉ ! » et cliquez sur le bouton « Continuer »
-# Vérifiez « Connecté avec le nom d'utilisateur » en haut
-# Ajouter des produits au panier
-# Cliquez sur le bouton « Panier »
-# Vérifiez que la page du panier s'affiche
-# Cliquez sur « Procéder au paiement »
-# Vérifiez que l'adresse de livraison et l'adresse de facturation sont les mêmes que celles renseignées lors de l'enregistrement du compte
-# Cliquez sur le bouton « Supprimer le compte »
-# Vérifiez « COMPTE SUPPRIMÉ ! » et cliquez sur le bouton « Continuer »
+Scenario : Control Download Invoice
+    [Teardown]    Teardown Delete RobertLucien account
+    Given I am on automationexercise website
+    When Proceed to pay 2 ordered Products while creating RobertLucien account
+    And Download Invoice invoice.txt
+    Then Invoice invoice.txt is Downloaded 
